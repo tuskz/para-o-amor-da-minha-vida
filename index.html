@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Para a Manu 💜</title>
+  <meta name="theme-color" content="#1a0626">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💜</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="travado">
+  <canvas id="fundo" aria-hidden="true"></canvas>
+  <div class="progresso" aria-hidden="true"><span id="barraProgresso"></span></div>
+
+  <!-- 1. Tela de senha -->
+  <div id="cadeado" class="cadeado">
+    <div class="cadeado-cena">
+      <div class="cadeado-mascotes">
+        <div class="cadeado-lontra" id="cadeadoLontra"></div>
+        <div class="cadeado-gatinha" id="cadeadoGatinha"></div>
+      </div>
+      <form class="placa" id="formSenha" autocomplete="off" novalidate>
+        <p class="placa-oi"><span id="saudacaoSenha">Oi, Princesa</span> <span class="pata-inline" data-pata></span></p>
+        <label for="senha" class="placa-pergunta" id="perguntaSenha"></label>
+        <input id="senha" name="senha" type="text" inputmode="numeric" autocomplete="off">
+        <button type="submit" class="botao">Entrar 💜</button>
+        <p class="placa-erro" id="erroSenha" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+
+  <main id="site">
+    <!-- 2. Abertura -->
+    <section id="inicio" class="hero">
+      <div class="hero-espia hero-espia-gatinha" id="heroGatinha"></div>
+      <div class="hero-espia hero-espia-lontra" id="heroLontra"></div>
+      <div class="hero-conteudo">
+        <p class="hero-pre">para a</p>
+        <h1 class="hero-nome" id="heroNome">Manu</h1>
+        <p class="hero-sub">pra <span class="hero-apelido" id="heroApelido">minha Princesa</span><span class="cursor" aria-hidden="true"></span></p>
+        <p class="hero-assinatura" id="heroAssinatura"></p>
+        <p class="hero-frase" id="heroFrase"></p>
+      </div>
+      <a href="#casal" class="rolar" aria-label="Rolar pra baixo">
+        <span>role pra baixo</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </section>
+
+    <!-- 3. A Gatinha & a Lontrinha -->
+    <section id="casal" class="secao">
+      <p class="sobretitulo reveal">nós duas</p>
+      <h2 class="titulo reveal">A Gatinha &amp; a Lontrinha</h2>
+      <div class="casal-cena reveal" id="casalCena"></div>
+      <p class="casal-texto reveal" id="casalTexto"></p>
+      <div class="casal-origem">
+        <div class="reveal"><figure class="polaroid" id="casalDesenho"></figure></div>
+        <div class="glass origem-chat reveal">
+          <p class="origem-titulo">direto do nosso zap <span id="origemData"></span></p>
+          <div class="bolhas" id="casalOrigem"></div>
+        </div>
+      </div>
+      <div class="casal-cards">
+        <div class="glass casal-card reveal">
+          <div class="casal-card-topo"><div class="mini" id="miniGatinha"></div><h3>Coisas de Gatinha</h3></div>
+          <ul id="listaGatinha"></ul>
+        </div>
+        <div class="glass casal-card reveal">
+          <div class="casal-card-topo"><div class="mini" id="miniLontra"></div><h3>Coisas de Lontrinha</h3></div>
+          <ul id="listaLontra"></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3b. Coisas que são a sua cara -->
+    <section id="suacara" class="secao">
+      <p class="sobretitulo reveal">do seu jeitinho</p>
+      <h2 class="titulo reveal">Coisas que são a sua cara</h2>
+      <div class="adesivos" id="gradeAdesivos"></div>
+    </section>
+
+    <!-- 4. Contador -->
+    <section id="contador" class="secao">
+      <p class="sobretitulo reveal">desde 29 de setembro de 2026</p>
+      <h2 class="titulo reveal">A Gatinha e a Lontrinha estão juntas há</h2>
+      <div class="contador reveal" role="timer" aria-live="off">
+        <div class="glass contador-caixa"><span class="contador-num" id="cDias">0</span><span class="contador-rotulo">dias</span></div>
+        <div class="glass contador-caixa"><span class="contador-num" id="cHoras">0</span><span class="contador-rotulo">horas</span></div>
+        <div class="glass contador-caixa"><span class="contador-num" id="cMin">0</span><span class="contador-rotulo">minutos</span></div>
+        <div class="glass contador-caixa"><span class="contador-num" id="cSeg">0</span><span class="contador-rotulo">segundos</span></div>
+      </div>
+      <p class="contador-rodape reveal">…e contando. Cada segundo com você vale a pena.</p>
+      <p class="contador-extra reveal" id="contadorConversa">e conversando desde o primeiro “Oiee” há <strong id="cConversa">0</strong> dias 💬</p>
+      <p class="contador-extra reveal" id="contadorCall">e já passamos mais de <strong id="cCall">0</strong> horas numa call só 📞
+        <button class="botao-print" type="button">ver o print 📸</button></p>
+    </section>
+
+    <!-- 5. Álbum -->
+    <section id="album" class="secao secao-larga">
+      <p class="sobretitulo reveal">nossos momentos</p>
+      <h2 class="titulo reveal">Nosso álbum</h2>
+      <div class="album reveal" id="albumEl" tabindex="0" aria-roledescription="carrossel" aria-label="Álbum de fotos">
+        <div class="album-slides" id="albumSlides"></div>
+        <button class="album-nav album-ant" id="albumAnt" aria-label="Foto anterior">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="album-nav album-prox" id="albumProx" aria-label="Próxima foto">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="album-pontos" id="albumPontos"></div>
+        <span class="album-conta" id="albumConta" aria-hidden="true"></span>
+      </div>
+    </section>
+
+    <!-- 6. Linha do tempo -->
+    <section id="historia" class="secao">
+      <p class="sobretitulo reveal">como tudo aconteceu</p>
+      <h2 class="titulo reveal">Nossa história</h2>
+      <div class="linha" id="linhaTempo"></div>
+    </section>
+
+    <!-- 7. Nossas conversas -->
+    <section id="conversas" class="secao">
+      <p class="sobretitulo reveal">do jeitinho que a gente falou</p>
+      <h2 class="titulo reveal">Nossas conversas</h2>
+      <p class="secao-intro reveal">Palavra por palavra, do jeitinho que tá no nosso zap, com a hora de cada mensagem.</p>
+      <div class="capitulos reveal" id="capitulos" role="tablist" aria-label="Capítulos das nossas conversas"></div>
+      <div class="celular reveal">
+        <div class="celular-topo">
+          <div class="celular-avatar" id="celularAvatar"></div>
+          <div class="celular-info">
+            <strong id="celularNome">Manu 💜</strong>
+            <span id="celularStatus">online</span>
+          </div>
+          <span class="celular-data" id="celularData"></span>
+        </div>
+        <div class="celular-tela" id="celularTela" role="tabpanel" aria-live="polite"></div>
+        <p class="celular-dica" id="celularDica" hidden>toque na conversa pra ver tudo de uma vez</p>
+        <div class="celular-rodape">
+          <button class="botao botao-leve" id="capAnt" aria-label="Capítulo anterior">‹ anterior</button>
+          <span class="celular-cap" id="celularCap"></span>
+          <button class="botao botao-leve" id="capProx" aria-label="Próximo capítulo">próximo ›</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. Frases -->
+    <section id="frases" class="secao">
+      <p class="sobretitulo reveal">guardadas no coração</p>
+      <h2 class="titulo reveal">Frases que eu guardo</h2>
+      <div class="alternar reveal" role="tablist" aria-label="Quem disse">
+        <button role="tab" class="ativo" data-quem="ela" aria-selected="true"><span class="alternar-mini" data-mini="gatinha"></span>Você me disse</button>
+        <button role="tab" data-quem="eu" aria-selected="false"><span class="alternar-mini" data-mini="lontrinha"></span>Eu te disse</button>
+      </div>
+      <div class="frases reveal" id="gradeFrases"></div>
+    </section>
+
+    <!-- 9. Textos -->
+    <section id="textos" class="secao">
+      <p class="sobretitulo reveal">palavras que ficaram</p>
+      <h2 class="titulo reveal">Textos que a gente trocou</h2>
+      <div class="textos" id="gradeTextos"></div>
+    </section>
+
+    <!-- 10. Números -->
+    <section id="numeros" class="secao">
+      <p class="sobretitulo reveal">só pra constar</p>
+      <h2 class="titulo reveal">Nosso zap em números</h2>
+      <div class="numeros" id="gradeNumeros"></div>
+    </section>
+
+    <!-- 11. Motivos -->
+    <section id="motivos" class="secao">
+      <p class="sobretitulo reveal">só alguns de infinitos</p>
+      <h2 class="titulo reveal">Motivos pelos quais eu te amo</h2>
+      <div class="motivos reveal">
+        <div class="motivos-lontra" id="motivosLontra"></div>
+        <div class="glass bilhete" id="bilhete">
+          <p class="bilhete-texto" id="bilheteTexto">A lontrinha guardou um monte de motivos na conchinha. Clica no botão pra ela te mostrar um 🐚</p>
+          <p class="bilhete-conta" id="bilheteConta"></p>
+        </div>
+        <button class="botao" id="botaoMotivo">Me dá mais um motivo 💜</button>
+      </div>
+    </section>
+
+    <!-- 12. Cartinhas -->
+    <section id="cartas" class="secao">
+      <p class="sobretitulo reveal">pra qualquer momento</p>
+      <h2 class="titulo reveal">Cartinhas “abra quando…”</h2>
+      <div class="cartas" id="gradeCartas"></div>
+    </section>
+
+    <!-- 13. Playlist -->
+    <section id="playlist" class="secao" hidden>
+      <p class="sobretitulo reveal">a trilha sonora da gente</p>
+      <h2 class="titulo reveal">Nossa playlist</h2>
+      <div class="playlists" id="spotifyBox"></div>
+      <div class="musicas" id="listaMusicas"></div>
+    </section>
+
+    <!-- 14. E continua pra sempre -->
+    <section id="prasempre" class="secao">
+      <p class="sobretitulo reveal">o melhor ainda vem</p>
+      <h2 class="titulo reveal">E continua pra sempre</h2>
+      <div class="pra-sempre-epigrafe reveal">
+        <div class="bolha bolha-eu">Só queria q fosse pra sempre</div>
+        <div class="bolha bolha-ela">Mais é pra sempre</div>
+      </div>
+      <p class="pra-sempre-texto reveal" id="praSempreTexto"></p>
+      <div class="glass encontro reveal" id="encontro"></div>
+      <div class="molduras" id="molduras"></div>
+      <h3 class="subtitulo reveal">O que a gente ainda vai viver</h3>
+      <ul class="sonhos" id="listaSonhos"></ul>
+    </section>
+
+    <!-- 15. Carta final -->
+    <section id="carta" class="secao">
+      <p class="sobretitulo reveal">por último, mas mais importante</p>
+      <h2 class="titulo reveal">Uma carta pra você</h2>
+      <article class="carta-final" id="cartaFinal">
+        <p class="carta-saudacao" id="cartaSaudacao"></p>
+        <div id="cartaParagrafos"></div>
+        <p class="carta-assinatura" id="cartaAssinatura"></p>
+      </article>
+    </section>
+  </main>
+
+  <!-- Rodapé + easter egg -->
+  <footer class="rodape">
+    <div class="rodape-casal" id="rodapeCasal"></div>
+    <p>Feito com 💜 pela sua Baianinha,<br>só pra você, <span class="rodape-nome" id="rodapeNome">Manu</span></p>
+    <p class="rodape-data" id="rodapeData"></p>
+    <button class="pata-secreta" id="pataSecreta" aria-label="Uma patinha escondida…"></button>
+  </footer>
+
+  <!-- Menu flutuante -->
+  <nav class="menu" id="menu" aria-label="Seções do site">
+    <button class="menu-botao" id="menuBotao" aria-expanded="false" aria-controls="menuLista" aria-label="Abrir menu">
+      <span class="menu-icone" data-pata></span>
+    </button>
+    <ul class="menu-lista glass" id="menuLista" hidden>
+      <li><a href="#inicio">Início</a></li>
+      <li><a href="#casal">A Gatinha &amp; a Lontrinha</a></li>
+      <li><a href="#suacara">A sua cara</a></li>
+      <li><a href="#contador">Nosso contador</a></li>
+      <li><a href="#album">Álbum</a></li>
+      <li><a href="#historia">Nossa história</a></li>
+      <li><a href="#conversas">Nossas conversas</a></li>
+      <li><a href="#frases">Frases que eu guardo</a></li>
+      <li><a href="#textos">Nossos textos</a></li>
+      <li><a href="#numeros">Em números</a></li>
+      <li><a href="#motivos">Motivos</a></li>
+      <li><a href="#cartas">Abra quando…</a></li>
+      <li data-se="playlist"><a href="#playlist">Playlist</a></li>
+      <li><a href="#prasempre">Pra sempre</a></li>
+      <li><a href="#carta">Uma carta pra você</a></li>
+    </ul>
+  </nav>
+
+  <!-- Desfile do easter egg -->
+  <div class="desfile" id="desfile" aria-hidden="true"></div>
+
+  <!-- Modal -->
+  <div class="modal" id="modal" hidden>
+    <div class="modal-fundo" data-fechar></div>
+    <div class="modal-caixa" role="dialog" aria-modal="true" aria-labelledby="modalTitulo">
+      <button class="modal-fechar" data-fechar aria-label="Fechar">×</button>
+      <div class="modal-conteudo" id="modalConteudo"></div>
+    </div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/mascotes.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+# Nunca publicar: conversa exportada e fotos originais
+Conversa*/
+Fotos/
+*.zip
+
+# Coisas locais
+.claude/
