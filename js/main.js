@@ -143,6 +143,8 @@
     }
 
     function quadro(t) {
+      // Com um joguinho aberto o fundo fica parado, pra não pesar no celular
+      if (!reduzMovimento && document.documentElement.classList.contains("jogando")) return requestAnimationFrame(quadro);
       ctx.clearRect(0, 0, w, h);
       for (let i = 0; i < particulas.length; i++) {
         const p = particulas[i];
@@ -1351,7 +1353,7 @@
     if (sg.teamo) {
       let ultimas = "";
       document.addEventListener("keydown", (e) => {
-        if (e.target.closest("input, textarea") || e.key.length !== 1) return;
+        if ((e.target.closest && e.target.closest("input, textarea")) || !e.key || e.key.length !== 1) return;
         ultimas = (ultimas + e.key.toLowerCase()).slice(-5);
         if (ultimas !== "teamo") return;
         ultimas = "";

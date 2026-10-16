@@ -741,6 +741,37 @@ window.CONFIG = {
       "assim que a gente se encontrar. É só me mostrar essa tela.",
   },
 
+  // FLIPERAMA: mini games estilo Pou. {n} vira a pontuação no fim do jogo.
+  // Apague um jogo daqui pra tirar ele do site.
+  jogos: {
+    comida: {
+      nome: "Chuva de Comida",
+      descricao: "A Gatinha tá com fome (novidade 🙄). Pega as comidas favoritas dela e desvia do lixo!",
+      comoJogar: "Arrasta o dedo pra mexer a Gatinha. No computador: setinhas ⬅️ ➡️ ou o mouse.",
+      comidas: ["🍕", "🍔", "🍟", "🍛", "🍫", "🍰", "🍊"],
+      lixos: ["🗑️", "🧦", "🥾", "🦴"],
+      fim: "Comeu {n} e… continua com fome 🥺",
+    },
+    nuvens: {
+      nome: "Kitsune nas Nuvens",
+      descricao: "Pula de nuvem em nuvem até o céu. Pega o fogo de raposa pra dar um superpulo!",
+      comoJogar: "Arrasta o dedo pros lados. No computador: setinhas ⬅️ ➡️ ou o mouse.",
+      fim: "A kitsune subiu {n}. Mais alto que isso, só o que eu sinto por você 💜",
+    },
+    lontra: {
+      nome: "Lontrinha Nadadora",
+      descricao: "Ajuda a Lontrinha a nadar entre as algas sem encostar em nada. Conchinha vale pontinho extra!",
+      comoJogar: "Toca na tela pra ela nadar pra cima. No computador: espaço ou clique.",
+      fim: "A Lontrinha fez {n}. Agora ela quer colinho 🦦💜",
+    },
+    memoria: {
+      nome: "Jogo da Memória",
+      descricao: "Acha os pares: a Gatinha, a Lontrinha, a kitsune, a Manuzinha Croft…",
+      comoJogar: "Vira duas cartas por vez. Tenta achar tudo com o mínimo de jogadas.",
+      fim: "Achou todos os pares em {n}. Memória boa, hein, Princesa 👑",
+    },
+  },
+
   // MAIS SEGREDOS: cada um se abre tocando várias vezes em algum lugar do site.
   // O rodapé mostra quantos ela já achou. Apague um bloco pra tirar aquele segredo.
   segredos: {

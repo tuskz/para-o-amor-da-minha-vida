@@ -1386,3 +1386,139 @@ body.travado .menu { display: none; }
   .fome-palco { width: 130px; margin-left: 40px; }
   .fome-comida { width: 74px; }
 }
+
+/* ================== Fliperama ================== */
+.jogos-grade { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; max-width: 1060px; margin: 0 auto; }
+.jogo-cartao {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 20px 14px 18px;
+  color: inherit;
+  font: inherit;
+  text-align: center;
+  cursor: pointer;
+  transition: transform .25s cubic-bezier(.2, .7, .2, 1), border-color .25s;
+}
+.jogo-cartao:hover, .jogo-cartao:focus-visible { transform: translateY(-6px); border-color: var(--lilas); outline: none; }
+.jogo-cartao-arte { position: relative; width: 112px; height: 96px; margin-bottom: 4px; }
+.jogo-cartao-arte .mascote { width: 100%; height: 100%; }
+.jogo-cartao-selo { position: absolute; right: -8px; bottom: -4px; font-size: 1.7rem; line-height: 1; filter: drop-shadow(0 3px 6px rgba(26, 6, 38, .6)); }
+.jogo-cartao-nome { font-family: var(--f-script); font-size: 1.8rem; line-height: 1.1; color: var(--lavanda); }
+.jogo-cartao-desc { flex: 1; font-size: .84rem; line-height: 1.5; color: var(--texto-suave); text-wrap: balance; }
+.jogo-cartao-recorde { font-size: .75rem; color: var(--lilas); }
+.jogo-cartao-jogar { margin-top: 6px; padding: .5em 1.4em; border-radius: 99px; background: linear-gradient(135deg, var(--violeta), var(--roxo)); color: #fff; font-size: .85rem; font-weight: 600; box-shadow: 0 6px 18px rgba(123, 44, 191, .45); }
+@media (max-width: 960px) { .jogos-grade { grid-template-columns: repeat(2, 1fr); max-width: 560px; } }
+@media (max-width: 520px) {
+  .jogos-grade { gap: 12px; }
+  .jogo-cartao { padding: 14px 8px 14px; }
+  .jogo-cartao-arte { width: 86px; height: 74px; }
+  .jogo-cartao-nome { font-size: 1.4rem; }
+  .jogo-cartao-desc { font-size: .76rem; }
+  .jogo-cartao-jogar { padding: .45em 1.1em; font-size: .8rem; }
+}
+
+/* Tela do mini game */
+.jogo {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: grid;
+  place-items: center;
+  background: rgba(15, 3, 24, .92);
+  backdrop-filter: blur(6px);
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.jogo[hidden] { display: none; }
+.jogo-caixa {
+  display: flex;
+  flex-direction: column;
+  width: min(480px, 100vw);
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  background: #1a0626;
+}
+@media (min-width: 521px) {
+  .jogo-caixa {
+    height: min(820px, calc(100vh - 40px));
+    height: min(820px, calc(100dvh - 40px));
+    border: 1px solid var(--vidro-borda);
+    border-radius: 24px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, .6), var(--sombra-brilho);
+  }
+}
+.jogo-topo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: max(10px, env(safe-area-inset-top)) 12px 10px;
+  background: rgba(45, 11, 69, .95);
+  border-bottom: 1px solid var(--vidro-borda);
+}
+.jogo-sair { flex: none; width: 38px; height: 38px; border: 0; border-radius: 50%; background: rgba(224, 170, 255, .15); color: var(--lavanda); font-size: 1.05rem; cursor: pointer; }
+.jogo-sair:hover { background: rgba(224, 170, 255, .28); }
+.jogo-nome { flex: 1; min-width: 0; overflow: hidden; font-family: var(--f-script); font-size: 1.55rem; line-height: 1.2; color: var(--lavanda); white-space: nowrap; text-overflow: ellipsis; }
+.jogo-vidas { flex: none; font-size: .9rem; letter-spacing: 1px; }
+.jogo-pontos { flex: none; min-width: 3.4em; padding: .3em .8em; border-radius: 99px; background: rgba(224, 170, 255, .15); color: #fff; font-size: .9rem; font-weight: 600; text-align: center; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.jogo-pontos:empty { display: none; }
+.jogo-palco { position: relative; flex: 1; min-height: 0; }
+.jogo-palco canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; touch-action: none; }
+.jogo-palco canvas[hidden] { display: none; }
+
+.jogo-painel { position: absolute; inset: 0; display: grid; place-items: center; padding: 20px; overflow-y: auto; background: rgba(15, 3, 24, .5); backdrop-filter: blur(3px); }
+.jogo-painel[hidden] { display: none; }
+.jogo-painel-caixa {
+  width: min(340px, 100%);
+  padding: 24px 22px 18px;
+  border-radius: 22px;
+  background: linear-gradient(170deg, #f8efff, #e8d3fb);
+  color: #3c1159;
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, .5);
+  animation: abrirCarta .4s cubic-bezier(.2, .8, .2, 1.1);
+}
+.jogo-painel-arte { width: 130px; height: 100px; margin: -6px auto 2px; }
+.jogo-painel-arte .mascote { width: 100%; height: 100%; }
+.jogo-painel-caixa h3 { margin: 0 0 .25em; font-family: var(--f-script); font-size: 2.2rem; font-weight: 400; line-height: 1.15; color: var(--roxo); }
+.jogo-painel-caixa p { margin: 0 0 .8em; font-size: .9rem; line-height: 1.5; }
+.jogo-painel-caixa .jogo-como { padding: .6em .8em; border-radius: 12px; background: rgba(123, 44, 191, .08); font-size: .8rem; color: #5a2a80; }
+.jogo-painel-caixa .jogo-recorde { min-height: 1.2em; font-weight: 600; color: var(--violeta); }
+.jogo-painel-caixa .jogo-fim-sobre { margin: 0; font-size: .75rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--violeta); }
+.jogo-painel-caixa .jogo-resultado { margin: .1em 0 .3em; font-family: var(--f-titulo); font-size: 2.3rem; line-height: 1.15; color: var(--roxo); }
+.jogo-link { display: block; margin: 10px auto 0; padding: 6px; border: 0; background: none; color: var(--violeta); font: inherit; font-size: .85rem; text-decoration: underline; cursor: pointer; }
+
+/* Jogo da memória */
+.jogo-memoria {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(4, var(--carta, 70px));
+  grid-auto-rows: var(--carta, 70px);
+  gap: 8px;
+  place-content: center;
+  background: radial-gradient(circle at 50% 30%, #3c096c, #1a0626 75%);
+}
+.jogo-memoria[hidden] { display: none; }
+.carta-memoria { padding: 0; border: 0; background: none; cursor: pointer; perspective: 600px; touch-action: manipulation; }
+.carta-miolo { position: relative; display: block; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform .45s cubic-bezier(.3, 1.3, .5, 1); }
+.carta-memoria.virada .carta-miolo { transform: rotateY(180deg); }
+.carta-verso, .carta-frente {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+.carta-verso { background: linear-gradient(135deg, var(--violeta), var(--roxo)); border: 2px solid rgba(224, 170, 255, .45); color: var(--rosado); box-shadow: 0 6px 14px rgba(0, 0, 0, .3); }
+.carta-verso .pata { width: 42%; height: 42%; opacity: .85; }
+.carta-frente { padding: 7%; background: #f8efff; border: 2px solid #fff; transform: rotateY(180deg); }
+.carta-frente .mascote { width: 100%; height: 100%; }
+.carta-memoria.par .carta-frente { box-shadow: 0 0 0 3px var(--lilas), 0 0 18px rgba(199, 125, 255, .8); }

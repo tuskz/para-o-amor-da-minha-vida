@@ -64,6 +64,9 @@ Em 1 ou 2 minutos o link já mostra a versão nova. O `.gitignore` continua deix
 
 Depois, gere um QR code do link e coloque num cartãozinho pra entregar pra ela. 💌
 
+## Fliperama 🕹️
+A seção "Fliperama da Gatinha" tem 4 joguinhos estilo Pou: Chuva de Comida, Kitsune nas Nuvens, Lontrinha Nadadora e Jogo da Memória. Os nomes, descrições, comidas e frases de fim de jogo ficam no bloco `jogos` do `js/config.js`; a lógica fica em `js/jogos.js`. Os recordes ficam salvos no navegador dela.
+
 ## Easter egg e segredos
 Tem uma patinha roxa quase invisível no rodapé. 🐾
 

@@ -194,6 +194,14 @@
       <div class="cartas" id="gradeCartas"></div>
     </section>
 
+    <!-- Fliperama: mini games estilo Pou -->
+    <section id="jogos" class="secao">
+      <p class="sobretitulo reveal">pra quando bater o tédio</p>
+      <h2 class="titulo reveal">Fliperama da Gatinha</h2>
+      <p class="secao-intro reveal">Uns joguinhos estilo Pou, feitos só pra você. Bate o recorde e me manda print 😤</p>
+      <div class="jogos-grade reveal" id="gradeJogos"></div>
+    </section>
+
     <!-- 13. Playlist -->
     <section id="playlist" class="secao" hidden>
       <p class="sobretitulo reveal">a trilha sonora da gente</p>
@@ -256,6 +264,7 @@
       <li><a href="#numeros">Em números</a></li>
       <li><a href="#motivos">Motivos</a></li>
       <li><a href="#cartas">Abra quando…</a></li>
+      <li><a href="#jogos">Fliperama</a></li>
       <li data-se="playlist"><a href="#playlist">Playlist</a></li>
       <li><a href="#prasempre">Pra sempre</a></li>
       <li><a href="#carta">Uma carta pra você</a></li>
@@ -274,8 +283,26 @@
     </div>
   </div>
 
+  <!-- Tela do mini game (Fliperama) -->
+  <div class="jogo" id="jogo" hidden>
+    <div class="jogo-caixa" role="dialog" aria-modal="true" aria-labelledby="jogoNome">
+      <div class="jogo-topo">
+        <button class="jogo-sair" id="jogoSair" type="button" aria-label="Sair do jogo">✕</button>
+        <span class="jogo-nome" id="jogoNome"></span>
+        <span class="jogo-vidas" id="jogoVidas" aria-label="Vidas"></span>
+        <span class="jogo-pontos" id="jogoPontos" aria-live="off">0</span>
+      </div>
+      <div class="jogo-palco" id="jogoPalco">
+        <canvas id="jogoTela"></canvas>
+        <div class="jogo-memoria" id="jogoMemoria" hidden></div>
+        <div class="jogo-painel" id="jogoPainel"></div>
+      </div>
+    </div>
+  </div>
+
   <script src="js/config.js"></script>
   <script src="js/mascotes.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/jogos.js"></script>
 </body>
 </html>
