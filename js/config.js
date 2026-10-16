@@ -838,7 +838,9 @@ window.CONFIG = {
     mesversario: "Hoje é dia 29: {n} de namoro! Feliz mesversário, minha Gatinha 💜",
     aniversario: "Hoje é 29 de setembro: {n} de namoro! Feliz aniversário de namoro, minha Gatinha 💜",
     hora: { hora: 23, minuto: 3, texto: "23:03… foi exatamente nessa hora que você me mandou o primeiro “Oiee”. 💜" },
+    // Respostas da tela de senha, se ela escrever "fome" ou "te amo" no lugar da data
     senhaFome: "Primeiro a senha, depois o lanche 🍕",
+    senhaTeamo: "Eu também te amo 💜… mas a senha é a nossa data 😉",
     teamo: "Eu também te amo 💜",
   },
 };

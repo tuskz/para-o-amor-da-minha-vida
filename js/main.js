@@ -250,9 +250,13 @@
           setTimeout(() => cadeado.remove(), 1100);
         }, 1300);
       } else {
-        const fome = cfg.segredos && cfg.segredos.senhaFome && /fome/i.test(input.value);
-        erro.textContent = fome ? cfg.segredos.senhaFome : cfg.senha.erros[tentativas % cfg.senha.erros.length];
-        if (!fome) tentativas++;
+        // Respostas escondidas se ela escrever "fome" ou "te amo" no lugar da data
+        const s = cfg.segredos || {};
+        const piada = (s.senhaFome && /fome/i.test(input.value) && s.senhaFome) ||
+          (s.senhaTeamo && /te\s*amo/i.test(input.value) && s.senhaTeamo);
+        erro.textContent = piada || cfg.senha.erros[tentativas % cfg.senha.erros.length];
+        if (piada) chuva(16, piada === s.senhaFome ? ["🍕", "🍔", "🍟"] : undefined);
+        else tentativas++;
         form.classList.remove("tremer");
         void form.offsetWidth;
         form.classList.add("tremer");

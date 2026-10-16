@@ -67,4 +67,4 @@ Depois, gere um QR code do link e coloque num cartãozinho pra entregar pra ela.
 ## Easter egg e segredos
 Tem uma patinha roxa quase invisível no rodapé. 🐾
 
-E mais 5 segredos que abrem tocando várias vezes em algum lugar. Onde fica cada um e os textos estão no bloco `segredos` do `js/config.js`. O rodapé mostra quantos ela já achou (fica salvo no navegador dela). Também tem surpresas que aparecem sozinhas: todo dia 29, às 23:03, e quando ela erra a senha escrevendo "fome".
+E mais 5 segredos que abrem tocando várias vezes em algum lugar. Onde fica cada um e os textos estão no bloco `segredos` do `js/config.js`. O rodapé mostra quantos ela já achou (fica salvo no navegador dela). Também tem surpresas que aparecem sozinhas: todo dia 29, às 23:03, e quando ela escreve "fome" ou "te amo" no lugar da senha.
