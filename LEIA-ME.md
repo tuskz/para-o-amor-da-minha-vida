@@ -49,9 +49,18 @@ Em `recordeCall` ficam as horas (aparecem no contador) e o print. O card de hora
 ## Ver no computador
 Dá pra abrir o `index.html` direto no navegador.
 
-## Publicar de graça
-- **Netlify Drop** (o mais fácil): entre em app.netlify.com/drop e arraste a pasta só com `index.html`, `css`, `js` e `img`.
-- **GitHub Pages** ou **Vercel** também funcionam.
+## Publicado 🌐
+O site está no ar em **https://tuskz.github.io/para-o-amor-da-minha-vida/** (GitHub Pages, repositório `tuskz/para-o-amor-da-minha-vida`).
+
+Pra atualizar depois de mudar alguma coisa, abra o terminal nesta pasta e rode:
+
+```
+git add -A
+git commit -m "atualiza o site"
+git push
+```
+
+Em 1 ou 2 minutos o link já mostra a versão nova. O `.gitignore` continua deixando a conversa e a pasta `Fotos/` de fora.
 
 Depois, gere um QR code do link e coloque num cartãozinho pra entregar pra ela. 💌
 
