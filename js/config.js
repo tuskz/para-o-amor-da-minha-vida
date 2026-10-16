@@ -740,4 +740,105 @@ window.CONFIG = {
       "um beijo demorado e um dia inteiro do jeito que você quiser, " +
       "assim que a gente se encontrar. É só me mostrar essa tela.",
   },
+
+  // MAIS SEGREDOS: cada um se abre tocando várias vezes em algum lugar do site.
+  // O rodapé mostra quantos ela já achou. Apague um bloco pra tirar aquele segredo.
+  segredos: {
+    dica: "psiu… este site tem segredos escondidos. Às vezes é só insistir um pouquinho. 🐾",
+    pata: { nome: "A patinha secreta" },
+
+    // Toque 3 vezes no bolo do adesivo “Chocolate e laranja”
+    fome: {
+      nome: "A Gatinha faminta",
+      titulo: "Tô com fome 🥺",
+      texto: "Você comeu o bolo inteiro… e mesmo assim. É a frase que eu mais escuto na call, quase toda hora. Então toma: dá comida pra Gatinha e vê o que acontece.",
+      pedido: "me dá comida? 🥺",
+      comidas: [
+        { icone: "🍕", nome: "pizza", enche: 35 },
+        { icone: "🍔", nome: "hambúrguer", enche: 30 },
+        { icone: "🍟", nome: "batata frita", enche: 20 },
+        { icone: "🍛", nome: "strogonoff", enche: 35 },
+        { icone: "🍫", nome: "bolo de chocolate", enche: 25 },
+        { icone: "🍊", nome: "bolo de laranja", enche: 25 },
+      ],
+      reacoes: ["nham nham 😋", "hmmm…", "que delícia", "mais um pouquinho", "nhac!"],
+      cheia: "tô cheia… 😮‍💨",
+      deNovo: "…tô com fome 🥺",
+      provasTitulo: "As provas 🕵️",
+      provas: [
+        { pausa: "01/10" },
+        { de: "eu", texto: "Fazer oq de bom amor?", hora: "09:49" },
+        { de: "ela", texto: "Comer", hora: "09:49" },
+        { pausa: "04/10" },
+        { de: "ela", texto: "Eu vou colocar comida pra mim", hora: "13:08" },
+        { de: "eu", texto: "Vai comer oq de bom minha princesa?", hora: "13:08" },
+        { de: "ela", texto: "Strogonoff", hora: "13:17" },
+        { pausa: "08/10" },
+        { de: "ela", texto: "Eu vou comer pizza já já", hora: "20:27" },
+        { pausa: "09/10" },
+        { de: "ela", texto: "Vou comer alguma coisa", hora: "15:39" },
+        { de: "ela", texto: "Tô com fome", hora: "15:39" },
+        { de: "ela", texto: "Vou comer mt", hora: "15:42" },
+        { pausa: "11/10" },
+        { de: "ela", texto: "Eu pedir algo pra comer", hora: "20:03" },
+        { de: "eu", texto: "Pediu oq?", hora: "20:03" },
+        { de: "ela", texto: "Hambúrguer e uma batata frita", hora: "20:04" },
+        { pausa: "12/10 · três vezes numa madrugada só" },
+        { de: "ela", texto: "Eu tô comprando alguma coisa para mim comer", hora: "01:03" },
+        { de: "ela", texto: "Agr vou comer alguma coisa", hora: "02:36" },
+        { de: "ela", texto: "Vou comer alguma coisa", hora: "05:41" },
+        { pausa: "13/10 · evento raríssimo" },
+        { de: "ela", texto: "To sem fome", hora: "19:08" },
+      ],
+      fim: "E isso é só o zap. Na call é quase toda hora: “tô com fome”. E eu amo cada vez. Um dia eu vou estar do seu lado pra te encher de comida de verdade. 🍕💜",
+    },
+
+    // Toque 9 vezes numa das kitsunes do canto (Cartinhas ou Números)
+    caudas: {
+      nome: "As nove caudas",
+      titulo: "Nove toques, nove caudas 🦊",
+      texto: "Dizem que uma kitsune ganha uma cauda nova a cada cem anos. Eu quero ficar do seu lado tempo suficiente pra ver você ganhar todas as nove.",
+    },
+
+    // Toque 5 vezes no contador
+    contador: {
+      nome: "O contador secreto",
+      titulo: "Contei de outro jeito 💓",
+      texto: "Dias, horas e minutos é pouco. Então contei assim:",
+      itens: [
+        { rotulo: "segundos juntas", porSegundo: 1 },
+        { rotulo: "batidas do meu coração, todas suas (contando 80 por minuto)", porSegundo: 80 / 60 },
+        { rotulo: "vezes que eu pensei em você", fixo: "∞" },
+      ],
+    },
+
+    // Toque 3 vezes na lontrinha da abertura
+    lontra: {
+      nome: "A pedrinha da lontra",
+      titulo: "A pedrinha favorita 🦦",
+      texto: "Sabia que lontra tem um bolsinho de pele debaixo do braço? É ali que ela guarda a pedrinha favorita dela, e leva pra todo lado. A minha pedrinha favorita é você: vou te levar comigo pra sempre.",
+    },
+
+    // Toque 3 vezes no card do “te amo”, lá nos números
+    placar: {
+      nome: "O placar do te amo",
+      suas: 65,
+      de: 44,
+      para: 66,
+      texto: "65 suas, 66 minhas… agora quem tá ganhando sou eu 😤💜",
+    },
+
+    // Quando ela achar todos
+    todos: {
+      titulo: "Você achou todos os segredos! 🏆",
+      texto: "Gatinha curiosa do jeito que eu amo. O prêmio: quando a gente se encontrar, a comida é toda por minha conta. Pizza, hambúrguer, batata frita, strogonoff, bolo… E quando você disser que tá com fome de novo, a gente come de novo. 💜",
+    },
+
+    // Surpresas que não precisam achar: aparecem sozinhas
+    mesversario: "Hoje é dia 29: {n} de namoro! Feliz mesversário, minha Gatinha 💜",
+    aniversario: "Hoje é 29 de setembro: {n} de namoro! Feliz aniversário de namoro, minha Gatinha 💜",
+    hora: { hora: 23, minuto: 3, texto: "23:03… foi exatamente nessa hora que você me mandou o primeiro “Oiee”. 💜" },
+    senhaFome: "Primeiro a senha, depois o lanche 🍕",
+    teamo: "Eu também te amo 💜",
+  },
 };

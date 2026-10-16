@@ -384,6 +384,7 @@ window.Mascotes = (() => {
     lontrinha: (op) => svg(lontrinhaG(op), "0 0 200 200", "lontrinha"),
     casal: (op) => svg(casalG(op), "0 0 400 240", "casal"),
     kitsune: (op) => svg(kitsuneG(op), "-50 0 300 230", "kitsune"),
+    fogo: () => svg(fogoRaposa(0, 0, 1), "-14 -22 28 38", "fogo"),
     gatinhaCroft: () => svg(gatinhaCroftG(), "0 0 200 200", "gatinha croft"),
     gatinhaEscarlate: () => svg(gatinhaEscarlateG(), "0 0 200 200", "gatinha escarlate"),
     adesivo: (nome) => (adesivos[nome] ? svg(adesivos[nome], "0 0 120 120", `adesivo-${nome}`) : ""),

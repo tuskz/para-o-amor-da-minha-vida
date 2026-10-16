@@ -165,6 +165,7 @@
   /* ================== Modal ================== */
   const modal = $("#modal");
   let focoAntes = null;
+  let aoFechar = null; // algo pra acontecer logo depois que o modal fechar
 
   function abrirModal(html) {
     focoAntes = document.activeElement;
@@ -178,6 +179,11 @@
     modal.hidden = true;
     document.body.style.overflow = "";
     if (focoAntes) focoAntes.focus();
+    if (aoFechar) {
+      const depois = aoFechar;
+      aoFechar = null;
+      setTimeout(depois, 350);
+    }
   }
 
   modal.addEventListener("click", (e) => { if (e.target.closest("[data-fechar]")) fecharModal(); });
@@ -244,8 +250,9 @@
           setTimeout(() => cadeado.remove(), 1100);
         }, 1300);
       } else {
-        erro.textContent = cfg.senha.erros[tentativas % cfg.senha.erros.length];
-        tentativas++;
+        const fome = cfg.segredos && cfg.segredos.senhaFome && /fome/i.test(input.value);
+        erro.textContent = fome ? cfg.segredos.senhaFome : cfg.senha.erros[tentativas % cfg.senha.erros.length];
+        if (!fome) tentativas++;
         form.classList.remove("tremer");
         void form.offsetWidth;
         form.classList.add("tremer");
@@ -335,7 +342,7 @@
     const giros = [-3, 2, -1.5, 3, -2, 1.5, -2.5, 2];
     $("#gradeAdesivos").innerHTML = itens.map((x, n) => `
       <div class="reveal" style="transition-delay:${(n % 4) * 0.07}s">
-        <div class="adesivo" style="--giro:${giros[n % giros.length]}deg">
+        <div class="adesivo" data-arte="${esc(x.arte)}" style="--giro:${giros[n % giros.length]}deg">
           <div class="adesivo-arte">${(artes[x.arte] || (() => M.adesivo(x.arte)))()}</div>
           <h3>${esc(x.titulo)}</h3>
           <p>${esc(x.texto)}</p>
@@ -348,10 +355,10 @@
     [
       ["#historia", M.gatinhaCroft(), "dir"], // a nossa aventura, com a Manuzinha Croft
       ["#frases", M.gatinhaEscarlate(), "esq"], // a princesinha escarlate
-      ["#cartas", M.kitsune(), "dir"], // a kitsune roxa
-      ["#numeros", M.kitsune({ fogos: false }), "esq"],
-    ].forEach(([sel, desenho, lado]) => {
-      $(sel)?.insertAdjacentHTML("afterbegin", `<div class="decor decor-${lado}" aria-hidden="true">${desenho}</div>`);
+      ["#cartas", M.kitsune(), "dir", "decor-kitsune"], // a kitsune roxa
+      ["#numeros", M.kitsune({ fogos: false }), "esq", "decor-kitsune"],
+    ].forEach(([sel, desenho, lado, extra = ""]) => {
+      $(sel)?.insertAdjacentHTML("afterbegin", `<div class="decor decor-${lado} ${extra}" aria-hidden="true">${desenho}</div>`);
     });
   }
 
@@ -684,7 +691,7 @@
     // Não deixa quebrar a linha no meio de uma palavra entre aspas (“te amo”)
     const juntinho = (s) => s.replace(/“[^”]*”/g, (m) => m.replace(/ /g, "&nbsp;"));
     grade.innerHTML = nums.map((x, n) => `
-      <div class="glass numero reveal" style="transition-delay:${(n % 3) * 0.08}s">
+      <div class="glass numero reveal" data-n="${n}" style="transition-delay:${(n % 3) * 0.08}s">
         ${x.icone ? `<span class="numero-icone" aria-hidden="true">${esc(x.icone)}</span>` : ""}
         <span class="numero-valor" data-alvo="${Number(x.num) || 0}">0</span>
         <span class="numero-rotulo">${juntinho(esc(x.rotulo))}</span>
@@ -943,7 +950,7 @@
   }
 
   /* ================== 11. Segredo ================== */
-  function chuva(qtd = 40) {
+  function chuva(qtd = 40, itens = ["💜", M.pata()]) {
     if (reduzMovimento) return;
     for (let i = 0; i < qtd; i++) {
       const el = document.createElement("span");
@@ -956,7 +963,7 @@
       el.style.animationDuration = `${2.8 + Math.random() * 2.5}s`;
       el.style.animationDelay = `${Math.random() * 1.2}s`;
       el.style.color = ["#c77dff", "#e0aaff", "#f3c4fb", "#9d4edd"][i % 4];
-      el.innerHTML = i % 2 ? M.pata() : "💜";
+      el.innerHTML = itens[i % itens.length];
       el.style.lineHeight = "1";
       document.body.appendChild(el);
       el.addEventListener("animationend", () => el.remove());
@@ -982,12 +989,372 @@
     botao.addEventListener("click", () => {
       chuva(50);
       desfile();
+      setTimeout(() => {
+        abrirModal(`
+          <div class="modal-mascotes">${M.casal({ agua: false })}</div>
+          <h3 id="modalTitulo">${esc(cfg.segredo.titulo)}</h3>
+          <p>${esc(cfg.segredo.texto)}</p>
+          <p class="assinatura">${esc(cfg.assinatura || "Sua Baianinha 🦦💜")}</p>`);
+        acharSegredo("pata");
+      }, reduzMovimento ? 0 : 900);
+    });
+  }
+
+  /* ================== 12. Mais segredos escondidos ================== */
+  const sg = cfg.segredos || {};
+  const assinado = () => `<p class="assinatura">${esc(cfg.assinatura || "Sua Baianinha 🦦💜")}</p>`;
+  const guardado = {
+    get(k) { try { return localStorage.getItem(k); } catch { return null; } },
+    set(k, v) { try { localStorage.setItem(k, v); } catch { /* sem storage, tudo bem */ } },
+  };
+  // A patinha sempre conta; os outros só se tiverem bloco no config
+  const idsSegredos = ["pata", "fome", "caudas", "contador", "lontra", "placar"].filter((id) => id === "pata" || sg[id]);
+  const nomeSegredo = (id) => (sg[id] && sg[id].nome) || "A patinha secreta";
+
+  function achados() {
+    try {
+      const lista = JSON.parse(guardado.get("manu-segredos") || "[]");
+      return Array.isArray(lista) ? lista.filter((id) => idsSegredos.includes(id)) : [];
+    } catch { return []; }
+  }
+
+  function atualizarDica() {
+    const el = $("#rodapeSegredos");
+    if (!el || !sg.dica) return el?.remove();
+    el.innerHTML = `${esc(sg.dica)}<br><b>${achados().length} de ${idsSegredos.length} achados</b>`;
+  }
+
+  // Avisinho que sobe do rodapé e some sozinho
+  function aviso(texto, ms = 4200) {
+    const el = document.createElement("div");
+    el.className = "aviso";
+    el.setAttribute("role", "status");
+    el.textContent = texto;
+    el.style.bottom = `${84 + $$(".aviso").length * 58}px`;
+    el.style.setProperty("--dura", `${ms}ms`);
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), ms + 200);
+  }
+
+  function acharSegredo(id) {
+    const lista = achados();
+    if (lista.includes(id)) return;
+    lista.push(id);
+    guardado.set("manu-segredos", JSON.stringify(lista));
+    atualizarDica();
+    aviso(`🔍 Segredo ${lista.length} de ${idsSegredos.length}: ${nomeSegredo(id)}`);
+    if (lista.length < idsSegredos.length || !sg.todos) return;
+    const festa = () => {
+      chuva(60, ["💜", M.pata(), "🏆", "🍕"]);
       setTimeout(() => abrirModal(`
         <div class="modal-mascotes">${M.casal({ agua: false })}</div>
-        <h3 id="modalTitulo">${esc(cfg.segredo.titulo)}</h3>
-        <p>${esc(cfg.segredo.texto)}</p>
-        <p class="assinatura">${esc(cfg.assinatura || "Sua Baianinha 🦦💜")}</p>`), reduzMovimento ? 0 : 900);
+        <h3 id="modalTitulo">${esc(sg.todos.titulo)}</h3>
+        <p>${esc(sg.todos.texto)}</p>${assinado()}`), reduzMovimento ? 0 : 900);
+    };
+    if (modal.hidden) setTimeout(festa, 2200);
+    else aoFechar = festa;
+  }
+
+  // Conta toques seguidos (no máximo 2 s entre um e outro)
+  function toques(el, quantos, aoCompletar, aoTocar) {
+    if (!el) return;
+    el.dataset.toque = "";
+    let n = 0, ultimo = 0;
+    el.addEventListener("click", (e) => {
+      const agora = Date.now();
+      n = agora - ultimo > 2000 ? 1 : n + 1;
+      ultimo = agora;
+      if (n >= quantos) { n = 0; aoCompletar(e); } else if (aoTocar) aoTocar(n, e);
     });
+  }
+
+  // Textinho que pula de onde a pessoa tocou
+  function pipoca(e, texto) {
+    const el = document.createElement("span");
+    el.className = "pipoca";
+    el.textContent = texto;
+    el.style.left = `${e.clientX}px`;
+    el.style.top = `${e.clientY}px`;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 1000);
+  }
+
+  const animar = (el, classe) => {
+    if (!el) return;
+    el.classList.remove(classe);
+    void el.offsetWidth;
+    el.classList.add(classe);
+  };
+
+  /* --- A Gatinha faminta: 3 mordidas no bolo do adesivo --- */
+  function segredoFome() {
+    const f = sg.fome;
+    const arte = $('.adesivo[data-arte="bolos"] .adesivo-arte');
+    if (!f || !arte) return;
+    const tamanhos = [1, 0.7, 0.4];
+    let volta;
+    const regenerar = (ms) => { clearTimeout(volta); volta = setTimeout(() => arte.style.removeProperty("--mordida"), ms); };
+    toques(arte, 3, (e) => {
+      pipoca(e, "nhac!");
+      arte.style.setProperty("--mordida", 0);
+      setTimeout(() => {
+        abrirFome();
+        acharSegredo("fome");
+        regenerar(1200);
+      }, reduzMovimento ? 0 : 600);
+    }, (n, e) => {
+      pipoca(e, "nhac!");
+      arte.style.setProperty("--mordida", tamanhos[n]);
+      regenerar(2600);
+    });
+  }
+
+  // A comidinha voa do botão até a boca da Gatinha
+  function voar(icone, de, para, pronto) {
+    if (reduzMovimento || !Element.prototype.animate) return pronto();
+    const a = de.getBoundingClientRect(), b = para.getBoundingClientRect();
+    const x0 = a.left + a.width / 2, y0 = a.top + a.height / 2;
+    const dx = b.left + b.width / 2 - x0, dy = b.top + b.height * 0.6 - y0;
+    const el = document.createElement("span");
+    el.className = "fome-voando";
+    el.textContent = icone;
+    el.style.left = `${x0}px`;
+    el.style.top = `${y0}px`;
+    document.body.appendChild(el);
+    let chegou = false;
+    const chegar = () => {
+      if (chegou) return;
+      chegou = true;
+      el.remove();
+      pronto();
+    };
+    el.animate([
+      { transform: "translate(-50%, -50%) scale(1)" },
+      { transform: `translate(calc(-50% + ${dx / 2}px), calc(-50% + ${dy / 2 - 70}px)) scale(1.25)`, offset: 0.5 },
+      { transform: `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px)) scale(.3)`, opacity: 0.3 },
+    ], { duration: 560, easing: "ease-in" }).onfinish = chegar;
+    setTimeout(chegar, 800); // se a animação travar (aba em segundo plano), a comida chega mesmo assim
+  }
+
+  function abrirFome() {
+    const f = sg.fome;
+    abrirModal(`
+      <div class="fome">
+        <div class="fome-palco">
+          <div class="fome-gata">${M.gatinha()}</div>
+          <div class="fome-balao" id="fomeBalao">${esc(f.pedido)}</div>
+        </div>
+        <h3 id="modalTitulo">${esc(f.titulo)}</h3>
+        <p>${esc(f.texto)}</p>
+        <div class="fome-barriga"><span>barriguinha</span><div class="fome-barra"><i id="fomeNivel"></i></div><b id="fomePct">0%</b></div>
+        <div class="fome-comidas">${f.comidas.map((c, i) => `
+          <button type="button" class="fome-comida" data-i="${i}"><span aria-hidden="true">${esc(c.icone)}</span>${esc(c.nome)}</button>`).join("")}
+        </div>
+        <p class="fome-placar" id="fomePlacar" aria-live="polite"></p>
+        <div class="fome-provas" id="fomeProvas" hidden>
+          <h4>${esc(f.provasTitulo)}</h4>
+          <div class="bolhas">${f.provas.map((m) => (m.pausa ? pausa(m) : bolha(m))).join("")}</div>
+          <p class="fome-fim">${esc(f.fim)}</p>
+          ${assinado()}
+        </div>
+      </div>`);
+
+    const caixa = $("#modalConteudo");
+    const gata = $(".fome-gata", caixa), balao = $("#fomeBalao"), placar = $("#fomePlacar");
+    const botoes = $$(".fome-comida", caixa);
+    let nivel = 0, pratos = 0, vezes = 0, cheia = false;
+
+    const mostrarNivel = () => {
+      $("#fomeNivel").style.width = `${Math.min(100, nivel)}%`;
+      $("#fomePct").textContent = `${Math.min(100, nivel)}%`;
+    };
+    const falar = (t) => { balao.textContent = t; animar(balao, "pulinho"); };
+    const contarPlacar = () => {
+      placar.textContent = `${pratos} ${pratos === 1 ? "prato servido" : "pratos servidos"}` +
+        (vezes ? ` · ficou com fome de novo ${vezes} ${vezes === 1 ? "vez" : "vezes"}` : "");
+    };
+
+    botoes.forEach((b) => b.addEventListener("click", () => {
+      if (cheia) return;
+      const c = f.comidas[+b.dataset.i];
+      voar(c.icone, b, gata, () => {
+        if (cheia || modal.hidden) return;
+        pratos++;
+        nivel += Number(c.enche) || 25;
+        mostrarNivel();
+        contarPlacar();
+        animar(gata, "mastigando");
+        if (nivel < 100) return falar(f.reacoes[(pratos - 1) % f.reacoes.length]);
+
+        // Encheu a barriguinha… por uns dois segundos
+        cheia = true;
+        falar(f.cheia);
+        gata.classList.add("cheia");
+        botoes.forEach((x) => { x.disabled = true; });
+        setTimeout(() => {
+          cheia = false;
+          nivel = 0;
+          vezes++;
+          gata.classList.remove("cheia");
+          mostrarNivel();
+          contarPlacar();
+          falar(f.deNovo);
+          botoes.forEach((x) => { x.disabled = false; });
+          $("#fomeProvas").hidden = false;
+        }, 2000);
+      });
+    }));
+  }
+
+  /* --- As nove caudas: 9 toques numa kitsune do canto --- */
+  function segredoCaudas() {
+    const c = sg.caudas;
+    if (!c) return;
+    $$(".decor-kitsune").forEach((dec) => {
+      const desenho = $(".mascote", dec);
+      toques(dec, 9, (e) => {
+        pipoca(e, "9/9 ✨");
+        chuva(44, [M.fogo(), "💜", M.fogo(), "🦊"]);
+        setTimeout(() => {
+          abrirModal(`
+            <div class="modal-mascotes modal-kitsune">${M.kitsune()}</div>
+            <h3 id="modalTitulo">${esc(c.titulo)}</h3>
+            <p>${esc(c.texto)}</p>${assinado()}`);
+          acharSegredo("caudas");
+        }, reduzMovimento ? 0 : 900);
+      }, (n, e) => {
+        animar(desenho, "pulinho");
+        if (n >= 2) pipoca(e, `${n}/9 🦊`);
+      });
+    });
+  }
+
+  /* --- O contador secreto: 5 toques no contador --- */
+  function segredoContador() {
+    const c = sg.contador;
+    const alvo = $(".contador");
+    if (!c || !alvo) return;
+    const i = cfg.inicioNamoro;
+    const inicio = new Date(i.ano, i.mes - 1, i.dia, i.hora || 0, i.minuto || 0, 0).getTime();
+    toques(alvo, 5, () => {
+      abrirModal(`
+        <h3 id="modalTitulo">${esc(c.titulo)}</h3>
+        <p>${esc(c.texto)}</p>
+        <div class="segredo-lista">${c.itens.map((x, k) => `
+          <div><strong data-k="${k}">${esc(x.fixo || "0")}</strong><span>${esc(x.rotulo)}</span></div>`).join("")}
+        </div>${assinado()}`);
+      const numeros = $$("#modalConteudo .segredo-lista strong").filter((el) => !c.itens[+el.dataset.k].fixo);
+      const relogio = setInterval(() => {
+        if (modal.hidden) return clearInterval(relogio);
+        const seg = Math.max(0, (Date.now() - inicio) / 1000);
+        numeros.forEach((el) => {
+          el.textContent = Math.floor(seg * c.itens[+el.dataset.k].porSegundo).toLocaleString("pt-BR");
+        });
+      }, 250);
+      acharSegredo("contador");
+    }, (n) => { if (n >= 3) animar(alvo, "pulinho"); });
+  }
+
+  /* --- A pedrinha da lontra: 3 toques na lontrinha da abertura --- */
+  function segredoLontra() {
+    const l = sg.lontra;
+    const el = $("#heroLontra");
+    if (!l || !el) return;
+    toques(el, 3, (e) => {
+      pipoca(e, "🪨💜");
+      setTimeout(() => {
+        abrirModal(`
+          <div class="modal-mascotes modal-lontra">${M.lontrinha()}</div>
+          <h3 id="modalTitulo">${esc(l.titulo)}</h3>
+          <p>${esc(l.texto)}</p>${assinado()}`);
+        acharSegredo("lontra");
+      }, reduzMovimento ? 0 : 500);
+    }, (n, e) => {
+      animar($(".mascote", el), "pulinho");
+      pipoca(e, "🫧");
+    });
+  }
+
+  /* --- O placar do te amo: 3 toques no card do “te amo” --- */
+  function segredoPlacar() {
+    const p = sg.placar;
+    const n = (cfg.numeros || []).findIndex((x) => /te amo/i.test(x.rotulo));
+    const card = p && n >= 0 && $(`.numero[data-n="${n}"]`);
+    if (!card) return;
+    const valor = $(".numero-valor", card), detalhe = $(".numero-detalhe", card);
+    const base = Number(cfg.numeros[n].num) || 0;
+    let feito = false;
+    toques(card, 3, (e) => {
+      pipoca(e, "💜");
+      if (feito) return;
+      feito = true;
+      chuva(24);
+      const extra = p.para - p.de, t0 = performance.now(), dura = reduzMovimento ? 0 : 1800;
+      const passo = (t) => {
+        const k = dura ? Math.min(1, (t - t0) / dura) : 1;
+        const soma = Math.round(extra * k);
+        valor.textContent = (base + soma).toLocaleString("pt-BR");
+        if (detalhe) detalhe.textContent = `${p.suas} suas, ${p.de + soma} minhas…`;
+        if (k < 1) return requestAnimationFrame(passo);
+        if (detalhe) detalhe.textContent = p.texto;
+        acharSegredo("placar");
+      };
+      requestAnimationFrame(passo);
+    }, (k, e) => pipoca(e, "💜"));
+  }
+
+  function iniciarSegredos() {
+    segredoFome();
+    segredoCaudas();
+    segredoContador();
+    segredoLontra();
+    segredoPlacar();
+    atualizarDica();
+  }
+
+  /* --- Surpresas que aparecem sozinhas (depois da senha) --- */
+  function surpresas() {
+    const hoje = new Date();
+    const i = cfg.inicioNamoro;
+
+    // Todo dia 29 tem mesversário (e no dia certinho, aniversário de namoro)
+    if (sg.mesversario && hoje.getDate() === i.dia) {
+      const meses = (hoje.getFullYear() - i.ano) * 12 + (hoje.getMonth() - (i.mes - 1));
+      if (meses >= 1) {
+        const anos = meses / 12;
+        const quanto = meses % 12 === 0 ? `${anos} ${anos === 1 ? "ano" : "anos"}` : `${meses} ${meses === 1 ? "mês" : "meses"}`;
+        const texto = (meses % 12 === 0 && sg.aniversario) || sg.mesversario;
+        setTimeout(() => { chuva(50); aviso(texto.replace("{n}", quanto), 8000); }, 1500);
+      }
+    }
+
+    // A hora do primeiro “Oiee”
+    const h = sg.hora;
+    if (h) {
+      const checar = () => {
+        const d = new Date();
+        const chave = `manu-hora-${d.toDateString()}`;
+        if (d.getHours() !== h.hora || d.getMinutes() !== h.minuto || sessao.get(chave) === "1") return;
+        sessao.set(chave, "1");
+        chuva(30);
+        aviso(h.texto, 8000);
+      };
+      checar();
+      setInterval(checar, 20000);
+    }
+
+    // “teamo” digitado em qualquer lugar, no computador
+    if (sg.teamo) {
+      let ultimas = "";
+      document.addEventListener("keydown", (e) => {
+        if (e.target.closest("input, textarea") || e.key.length !== 1) return;
+        ultimas = (ultimas + e.key.toLowerCase()).slice(-5);
+        if (ultimas !== "teamo") return;
+        ultimas = "";
+        chuva(40);
+        aviso(sg.teamo);
+      });
+    }
   }
 
   /* ================== Início ================== */
@@ -1009,11 +1376,13 @@
   iniciarPraSempre();
   iniciarCarta();
   iniciarSegredo();
+  iniciarSegredos();
   iniciarMenu();
   iniciarProgresso();
 
   iniciarCadeado(() => {
     document.body.classList.remove("travado");
     iniciarReveal();
+    surpresas();
   });
 })();

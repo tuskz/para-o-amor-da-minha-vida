@@ -1257,3 +1257,132 @@ body.travado .menu { display: none; }
 @keyframes magia { 0%, 100% { transform: scale(1) rotate(0deg); } 50% { transform: scale(1.14) rotate(14deg); } }
 .mascote .m-tranca { transform-box: view-box; transform-origin: 141px 110px; animation: tranca 3s ease-in-out infinite; }
 @keyframes tranca { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(4deg); } }
+
+/* ================== Segredos escondidos ================== */
+[data-toque] { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+.decor[data-toque] { pointer-events: auto; }
+.pulinho { animation: pulinho .45s cubic-bezier(.3, 1.6, .5, 1); }
+@keyframes pulinho { 40% { transform: translateY(-12px) scale(1.06); } }
+.contador.pulinho { animation-duration: .35s; }
+
+.rodape-segredos { max-width: 340px; margin: 26px auto 0 !important; font-size: .78rem; line-height: 1.6; color: var(--lilas); opacity: .55; }
+.rodape-segredos b { font-weight: 600; color: var(--lavanda); }
+
+/* Textinho que pula do toque */
+.pipoca {
+  position: fixed;
+  z-index: 260;
+  pointer-events: none;
+  font-family: var(--f-texto);
+  font-size: 1rem;
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--lavanda);
+  text-shadow: 0 2px 10px rgba(26, 6, 38, .9);
+  transform: translate(-50%, -50%);
+  animation: pipocar .9s ease-out forwards;
+}
+@keyframes pipocar { to { transform: translate(-50%, -190%) scale(1.15); opacity: 0; } }
+
+/* Avisinho de segredo encontrado */
+.aviso {
+  position: fixed;
+  left: 50%;
+  z-index: 250;
+  width: max-content;
+  max-width: min(calc(100vw - 32px), 440px);
+  padding: .75em 1.3em;
+  border-radius: 18px;
+  background: linear-gradient(135deg, var(--violeta), var(--roxo));
+  color: #fff;
+  font-size: .9rem;
+  line-height: 1.45;
+  text-align: center;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, .45), 0 0 0 1px rgba(224, 170, 255, .35);
+  transform: translateX(-50%);
+  pointer-events: none;
+  animation: avisoEntra .45s cubic-bezier(.2, .8, .2, 1.2) both, avisoSai .5s ease calc(var(--dura, 4200ms) - 500ms) forwards;
+}
+@keyframes avisoEntra { from { opacity: 0; transform: translate(-50%, 24px) scale(.9); } }
+@keyframes avisoSai { to { opacity: 0; transform: translate(-50%, 12px); } }
+
+.chuva-item .mascote { width: 100%; height: 100%; }
+
+/* O bolo do adesivo levando mordidas */
+.adesivo-arte[data-toque] .mascote { transform: scale(var(--mordida, 1)); transition: transform .35s cubic-bezier(.3, 1.5, .5, 1); }
+
+/* Modal da Gatinha faminta */
+.fome { text-align: center; }
+.fome-palco { position: relative; width: 160px; margin: -8px auto 4px; }
+.fome-gata .mascote { transition: transform .4s cubic-bezier(.3, 1.5, .5, 1); }
+.fome-gata.mastigando .mascote { animation: mastigar .5s ease; }
+@keyframes mastigar { 25% { transform: scale(1.07, .93); } 50% { transform: scale(.96, 1.05); } 75% { transform: scale(1.04, .97); } }
+.fome-gata.cheia .mascote { transform: scale(1.12, 1.05); }
+.fome-balao {
+  position: absolute;
+  top: 34px;
+  left: 74%;
+  padding: .4em .8em;
+  border-radius: 14px 14px 14px 4px;
+  background: #fff;
+  color: var(--roxo);
+  font-family: var(--f-texto);
+  font-size: .82rem;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 6px 16px rgba(60, 17, 89, .18);
+}
+.fome-barriga { display: flex; align-items: center; gap: 10px; margin: 0 0 14px; font-family: var(--f-texto); font-size: .7rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--violeta); }
+.fome-barriga b { min-width: 3.2em; text-align: right; }
+.fome-barra { flex: 1; height: 14px; border-radius: 99px; background: rgba(123, 44, 191, .12); overflow: hidden; }
+.fome-barra i { display: block; width: 0; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #f39ad6, var(--violeta)); transition: width .5s cubic-bezier(.3, 1.3, .5, 1); }
+.fome-comidas { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 0 0 12px; }
+.fome-comida {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  width: 78px;
+  padding: 8px 4px 7px;
+  border: 2px solid rgba(123, 44, 191, .16);
+  border-radius: 14px;
+  background: #fff;
+  color: var(--roxo);
+  font-family: var(--f-texto);
+  font-size: .68rem;
+  font-weight: 500;
+  line-height: 1.2;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: transform .15s, border-color .15s, opacity .2s;
+}
+.fome-comida span { font-size: 1.7rem; line-height: 1; }
+.fome-comida:hover { transform: translateY(-2px); border-color: var(--violeta); }
+.fome-comida:active { transform: scale(.93); }
+.fome-comida:disabled { opacity: .4; cursor: default; transform: none; }
+.modal-conteudo .fome-placar { min-height: 1.4em; margin: 0 0 .4em; font-family: var(--f-texto); font-size: .85rem; line-height: 1.4; color: var(--violeta); }
+.fome-voando { position: fixed; z-index: 260; font-size: 2rem; line-height: 1; pointer-events: none; transform: translate(-50%, -50%); }
+.fome-provas { margin-top: 16px; padding-top: 14px; border-top: 1px dashed rgba(123, 44, 191, .3); text-align: left; }
+.fome-provas[hidden] { display: none; }
+.fome-provas h4 { margin: 0 0 .3em; text-align: center; font-family: var(--f-script); font-size: 2rem; font-weight: 400; color: var(--roxo); }
+.modal-conteudo .fome-fim { margin: 1em 0 .6em; }
+.modal-conteudo .bolha { font-size: .9rem; }
+.modal-conteudo .bolha-ela { background: #fff; border-color: rgba(123, 44, 191, .16); color: #3c1159; }
+.modal-conteudo .bolha-ela .bolha-hora { color: rgba(60, 17, 89, .5); }
+.modal-conteudo .chat-pausa { margin: 6px 0; font-family: var(--f-texto); font-size: .72rem; line-height: 1.4; color: var(--violeta); }
+.modal-conteudo .chat-pausa span { background: rgba(123, 44, 191, .1); white-space: normal; text-align: center; }
+.modal-conteudo .chat-pausa::before, .modal-conteudo .chat-pausa::after { background: linear-gradient(90deg, transparent, rgba(123, 44, 191, .3), transparent); }
+
+/* Contador secreto */
+.segredo-lista { display: grid; gap: 10px; margin: 0 0 1.2em; }
+.segredo-lista div { padding: 12px 10px; border-radius: 14px; background: rgba(255, 255, 255, .65); text-align: center; }
+.segredo-lista strong { display: block; font-family: var(--f-titulo); font-size: 1.8rem; line-height: 1.2; color: var(--roxo); font-variant-numeric: tabular-nums; }
+.segredo-lista span { font-size: .85rem; color: #6b3d8c; }
+
+.modal-conteudo .modal-kitsune { width: 240px; }
+.modal-conteudo .modal-lontra { width: 150px; }
+
+@media (max-width: 420px) {
+  .fome-palco { width: 130px; margin-left: 40px; }
+  .fome-comida { width: 74px; }
+}
