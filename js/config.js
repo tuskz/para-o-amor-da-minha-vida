@@ -685,6 +685,184 @@ window.CONFIG = {
     { nome: "Vício de Amor", ouvir: "https://youtu.be/ZLzDMCS6pPY", artista: "Anny feat. Chrono", historia: "Outra favorita minha. E o nome já diz tudo." },
   ],
 
+  /* LISTA DA MANU
+     Fica no Cantinho da Manu, dentro da Nossa Casinha.
+     Em praAssistir (no Cineminha), visto é só o estado inicial; depois ela marca no navegador dela. */
+  listasManu: {
+    comidaFavorita: "Uma das comidas favoritas dela: a Baianinha 😳",
+    comidas: [
+      {
+        titulo: "Pratos e comida de casa",
+        itens: [
+          "Strogonoff",
+          "Macarrão com carne moída",
+          "Lasanha bolonhesa e de frango",
+          "Escondidinho",
+          "Purê de batata (gosta bastante)",
+          "Torta de frango",
+          "Almôndega",
+          "Bife de hambúrguer",
+          "Nuggets de frango",
+          "Fígado",
+          "Miojo (ama)",
+          "Churrasco",
+          "Batata frita",
+          "Sushi (ama) e temaki",
+        ],
+      },
+      {
+        titulo: "Pizza, lanche e salgado",
+        itens: [
+          "Pizza de Prestígio, Calabresa, Frango com Catupiry, Romeu e Julieta e Hot Dog",
+          "Hambúrguer (ama), Xis Tudo, Hot Dog e Misto Quente",
+          "Coxinha (ama)",
+          "Pastel de carne moída, frango, queijo e doce",
+          "Pastel de calabresa",
+          "Subway no geral e Burger King",
+          "Salgadinho de cebola, de requeijão ou de milho",
+          "Molho verde e ketchup (ama)",
+        ],
+      },
+      {
+        titulo: "Doces e sobremesas",
+        itens: [
+          "Doce no geral (ela AMA)",
+          "Açaí com paçoca, morango, Nutella e Chocobol",
+          "Sorvete de flocos, sacolé/Didim, milkshake no geral e Milky Moo",
+          "Bolo (ama), incluindo o de chocolate e o de laranja",
+          "Brigadeiro, pudim, brownie, cookies, pavê de uva e churros com doce de leite",
+          "Doce de leite, leite condensado, leite em pó e paçoca",
+          "Sucrilhos e Nescau (gosta muito) e Toddynho (gosta muito)",
+          "Mingau",
+        ],
+      },
+      {
+        titulo: "Bebidas",
+        itens: [
+          "Café (ama)",
+          "Coca-Cola; Pepsi ela acha meio termo",
+          "Chá no geral, de hortelã de preferência",
+        ],
+      },
+      {
+        titulo: "Frutas e verduras",
+        itens: [
+          "Uva, maçã, manga, laranja e morango",
+          "Cebola (gosta bastante), cenoura, alface, brócolis, abóbora e batata",
+        ],
+      },
+    ],
+    outras: [
+      {
+        titulo: "Jogos",
+        itens: [
+          "Overwatch (está gostando e até jogou ranqueada na minha conta)",
+          "Marvel Rivals",
+          "Fortnite",
+          "Roblox",
+          "Free Fire (jogava bastante)",
+          "Persona (joga mesmo sendo só em inglês, traduzindo pelo celular)",
+          "FNAF",
+          "RPG Ordem Paranormal: gostou muito da classe Ocultista",
+        ],
+      },
+      {
+        titulo: "Terror",
+        itens: [
+          "\"Eu amo terror\"",
+          "Analog horror no YouTube",
+          "Stephen King",
+        ],
+      },
+      {
+        titulo: "Anime e séries",
+        itens: [
+          "Crunchyroll",
+          "Power Rangers (viu tudo)",
+          "Hazbin Hotel (ficou doida com a skin no Fortnite)",
+          "Re:Zero (viu um pouco)",
+        ],
+      },
+      {
+        titulo: "Fofura e visual",
+        itens: [
+          "Gatos: ela se chama de \"gata\" e manda muita figurinha de gato",
+          "Figurinhas da Barbie e de bichinhos gordinhos",
+          "Cabelo rosa",
+        ],
+      },
+      {
+        titulo: "Comigo",
+        itens: [
+          "Dormir em call",
+          "Jogar juntas e assistir algo juntas",
+          "Ouvir a minha voz",
+          "Apelidos: princesa, moh, Lady loka",
+        ],
+      },
+    ],
+    naoGosta: ["Banana", "Tomate", "Pepino", "Cerveja (não curte muito)", "Acordar cedo"],
+    praAssistir: [
+      { id: "carrie", icone: "🌹", titulo: "Carrie, a Estranha", nota: "a série do Stephen King no Prime Video. Essa a gente já terminou juntas 💜", visto: true },
+      { id: "screamboat", icone: "🐭", titulo: "Screamboat", nota: "o terror que ela quer ver", visto: false },
+      { id: "lara-croft", icone: "🏺", titulo: "Vídeo da Lara Croft", nota: "Tomb Raider, lá no YouTube", link: "https://youtu.be/L13HXKT4Z_k", visto: false },
+      { id: "it", icone: "🎈", titulo: "It: A Coisa", nota: "a série", visto: false },
+      { id: "re-zero", icone: "⏳", titulo: "Re:Zero", nota: "na Crunchyroll. Ela só viu um pouquinho", visto: false },
+      { id: "hazbin-hotel", icone: "🍎", titulo: "Hazbin Hotel", nota: "se ela ainda não viu tudo", visto: false },
+      { id: "the-boys", icone: "🦸", titulo: "The Boys", nota: "do começo, porque ela só viu o final da última temporada", visto: false },
+    ],
+  },
+
+  /* NOSSA CASINHA (estilo Pou)
+     Os dois bichinhos moram aqui: a Kitsune e o Cachorrinho preto e branco.
+     genero "a" ou "o" acerta as falas (cheia/cheio). As moedas vêm dos joguinhos da Sala de Jogos.
+     comidas: enche = quanto tira da fome, preco = moedas na loja. eca: true = coisa que ela odeia 🤢
+     arte: as que não têm emoji bonito (coxinha, brigadeiro, açaí) são desenhadas no js/casa.js */
+  casinha: {
+    pets: [
+      { id: "kitsune", nome: "Kitsune", genero: "a" },
+      { id: "cachorrinho", nome: "Cachorrinho", genero: "o" },
+    ],
+    moedasIniciais: 150,
+    presenteDoDia: 40,
+    comidas: [
+      { id: "pizza", nome: "Pizza de calabresa", icone: "🍕", enche: 30, preco: 12 },
+      { id: "hamburguer", nome: "Hambúrguer", icone: "🍔", enche: 30, preco: 12 },
+      { id: "coxinha", nome: "Coxinha", arte: "coxinha", enche: 20, preco: 8 },
+      { id: "strogonoff", nome: "Strogonoff", icone: "🍛", enche: 35, preco: 15 },
+      { id: "sushi", nome: "Sushi", icone: "🍣", enche: 25, preco: 14 },
+      { id: "miojo", nome: "Miojo", icone: "🍜", enche: 20, preco: 5 },
+      { id: "batata", nome: "Batata frita", icone: "🍟", enche: 18, preco: 6 },
+      { id: "hotdog", nome: "Hot dog", icone: "🌭", enche: 22, preco: 8 },
+      { id: "bolo", nome: "Bolo de chocolate", icone: "🍰", enche: 22, preco: 9 },
+      { id: "brigadeiro", nome: "Brigadeiro", arte: "brigadeiro", enche: 10, preco: 4 },
+      { id: "acai", nome: "Açaí com Nutella", arte: "acai", enche: 25, preco: 12 },
+      { id: "sorvete", nome: "Sorvete de flocos", icone: "🍦", enche: 14, preco: 6 },
+      { id: "pudim", nome: "Pudim", icone: "🍮", enche: 16, preco: 7 },
+      { id: "cafe", nome: "Café", icone: "☕", enche: 6, preco: 3, energia: 20 },
+      { id: "toddynho", nome: "Toddynho", icone: "🧃", enche: 10, preco: 4 },
+      { id: "morango", nome: "Morango", icone: "🍓", enche: 8, preco: 3 },
+      { id: "uva", nome: "Uva", icone: "🍇", enche: 8, preco: 3 },
+      { id: "banana", nome: "Banana", icone: "🍌", enche: 0, preco: 1, eca: true },
+      { id: "tomate", nome: "Tomate", icone: "🍅", enche: 0, preco: 1, eca: true },
+      { id: "pepino", nome: "Pepino", icone: "🥒", enche: 0, preco: 1, eca: true },
+    ],
+    geladeiraInicial: { pizza: 2, hamburguer: 1, coxinha: 3, strogonoff: 1, brigadeiro: 3, cafe: 2, banana: 1 },
+    falas: {
+      fome: ["tô com fome 🥺", "me dá comida? 🥺", "minha barriga tá roncando…", "tô com fome (novidade 🙄)"],
+      comendo: ["nham nham 😋", "que delícia!", "hmmm 🤤", "mais! mais!"],
+      cheia: ["tô chei{a}… 😮‍💨"],
+      deNovo: "…tô com fome 🥺",
+      eca: ["ECA! 🤢", "isso não, por favor 🤢", "a Manu odeia isso!! 😤"],
+      suja: ["tô fedendo um pouquinho… 🫧", "me dá banho? 🛁"],
+      limpa: ["cheirosinh{a}! ✨", "brilhando! ✨"],
+      sono: ["tô com soninho… 😴", "apaga a luz? 💤"],
+      tedio: ["vamos brincar? 🎾", "tô entediad{a}…"],
+      carinho: ["💜", "hihi 🥰", "mais carinho!", "te amo! 💜"],
+      acordar: ["bom dia! ☀️", "dormi tão bem! 😊"],
+    },
+  },
+
   /* E CONTINUA PRA SEMPRE
      fotosJuntas: quando a gente se encontrar, é só pôr o src de cada foto.
      encontro: a data do nosso primeiro encontro, quando a gente marcar.

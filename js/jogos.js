@@ -1,4 +1,4 @@
-// Fliperama da Gatinha: mini games estilo Pou, desenhados num <canvas>
+// Mini games estilo Pou, desenhados num <canvas>. Abrem pela Sala de Jogos da Nossa Casinha (js/casa.js)
 (() => {
   const cfg = window.CONFIG;
   const M = window.Mascotes;
@@ -18,14 +18,8 @@
     return a;
   };
 
-  const secao = $("#jogos");
-  if (!secao) return;
   const ids = ["comida", "nuvens", "lontra", "memoria"].filter((id) => J[id]);
-  if (!ids.length) {
-    secao.remove();
-    $('#menuLista a[href="#jogos"]')?.parentElement.remove();
-    return;
-  }
+  if (!$("#jogo") || !ids.length) return;
 
   /* ================== Recordes (ficam no navegador dela) ================== */
   const recordes = (() => {
@@ -45,7 +39,7 @@
     return bateu;
   }
 
-  /* ================== Cartões da seção ================== */
+  /* ================== Artes de cada jogo ================== */
   const artes = {
     comida: () => M.gatinha(),
     nuvens: () => M.kitsune(),
@@ -53,17 +47,6 @@
     memoria: () => M.casal({ agua: false }),
   };
   const selo = { comida: "🍕", nuvens: "☁️", lontra: "🐚", memoria: "🃏" };
-
-  function montarGrade() {
-    $("#gradeJogos").innerHTML = ids.map((id) => `
-      <button class="glass jogo-cartao" type="button" data-jogo="${id}">
-        <span class="jogo-cartao-arte">${artes[id]()}<span class="jogo-cartao-selo" aria-hidden="true">${selo[id]}</span></span>
-        <span class="jogo-cartao-nome">${esc(J[id].nome)}</span>
-        <span class="jogo-cartao-desc">${esc(J[id].descricao)}</span>
-        <span class="jogo-cartao-recorde">${recordes[id] != null ? `🏆 recorde: ${formatar(id, recordes[id])}` : "ainda sem recorde"}</span>
-        <span class="jogo-cartao-jogar">Jogar ▶</span>
-      </button>`).join("");
-  }
 
   /* ================== Tela do jogo ================== */
   const caixa = $("#jogo");
@@ -150,7 +133,9 @@
     if (!id) return;
     parar();
     const bateu = salvarRecorde(id, valor);
-    montarGrade();
+    // A casinha escuta isso pra dar moedinhas e mexer nos bichinhos
+    const fim = { id, valor, bateu, extras: [] };
+    document.dispatchEvent(new CustomEvent("fliperama:fim", { detail: fim }));
     const frase = (J[id].fim || "").replace("{n}", formatar(id, valor));
     painel.innerHTML = `
       <div class="jogo-painel-caixa">
@@ -158,8 +143,9 @@
         <p class="jogo-resultado">${esc(formatar(id, valor))}</p>
         ${frase ? `<p>${esc(frase)}</p>` : ""}
         <p class="jogo-recorde">🏆 recorde: ${esc(formatar(id, recordes[id]))}</p>
+        ${fim.extras.map((t) => `<p class="jogo-ganho">${esc(t)}</p>`).join("")}
         <button class="botao" type="button" data-acao="jogar">Jogar de novo ↻</button>
-        <button class="jogo-link" type="button" data-acao="sair">escolher outro jogo</button>
+        <button class="jogo-link" type="button" data-acao="sair">voltar pra casinha</button>
       </div>`;
     painel.hidden = false;
     $('[data-acao="jogar"]', painel).focus();
@@ -796,10 +782,6 @@
   const JOGOS = Object.fromEntries(ids.map((id) => [id, fabricas[id]()]));
 
   /* ================== Controles ================== */
-  $("#gradeJogos").addEventListener("click", (e) => {
-    const b = e.target.closest("[data-jogo]");
-    if (b) abrir(b.dataset.jogo);
-  });
   $("#jogoSair").addEventListener("click", sair);
   painel.addEventListener("click", (e) => {
     const b = e.target.closest("[data-acao]");
@@ -847,5 +829,16 @@
   });
   window.addEventListener("resize", () => { if (!caixa.hidden) medir(); });
 
-  montarGrade();
+  // O que a casinha precisa pra montar a lista da Sala de Jogos
+  window.Fliperama = {
+    lista: () => ids.map((id) => ({
+      id,
+      nome: J[id].nome,
+      descricao: J[id].descricao,
+      selo: selo[id],
+      arte: artes[id](),
+      recorde: recordes[id] != null ? formatar(id, recordes[id]) : null,
+    })),
+    abrir,
+  };
 })();

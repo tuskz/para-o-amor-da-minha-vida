@@ -57,6 +57,48 @@ window.Mascotes = (() => {
       d="M0 -4 C-3 -10 -12 -9 -12 -2 C-12 5 -3 9 0 13 C3 9 12 5 12 -2 C12 -9 3 -10 0 -4 Z"
       fill="${cor}"/>`;
 
+  /* ---------- Carinhas dos bichinhos da casinha (olhos em 78/122, y 84) ---------- */
+  function olhosPet(tipo = "abertos", rx = 10, ry = 12) {
+    const L = 78, R = 122, Y = 84;
+    const traco = `stroke="${C.escuro}" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"`;
+    if (tipo === "fechados") return olhoFechado(L, Y + 2, rx) + olhoFechado(R, Y + 2, rx);
+    if (tipo === "felizes") {
+      return [L, R].map((x) => `<path d="M${x - rx} ${Y + 4} Q${x} ${Y - ry * 1.1} ${x + rx} ${Y + 4}" ${traco}/>`).join("");
+    }
+    if (tipo === "eca") {
+      return `<path d="M${L - 8} ${Y - 7} L${L + 7} ${Y} L${L - 8} ${Y + 7}" ${traco}/>` +
+        `<path d="M${R + 8} ${Y - 7} L${R - 7} ${Y} L${R + 8} ${Y + 7}" ${traco}/>`;
+    }
+    const abertos = `<g class="m-piscar">${olhoAberto(L, Y, rx, ry)}${olhoAberto(R, Y, rx, ry)}</g>`;
+    if (tipo === "tristes") {
+      return abertos +
+        `<path d="M${L - 13} ${Y - 14} L${L + 7} ${Y - 21}" ${traco} stroke-width="3.2"/>` +
+        `<path d="M${R + 13} ${Y - 14} L${R - 7} ${Y - 21}" ${traco} stroke-width="3.2"/>`;
+    }
+    return abertos;
+  }
+
+  function bocaPet(tipo = "sorriso", y = 109) {
+    const traco = `stroke="${C.escuro}" stroke-width="2.6" fill="none" stroke-linecap="round"`;
+    const sorriso = `<path d="M100 ${y} Q96 ${y + 6} 90 ${y + 3} M100 ${y} Q104 ${y + 6} 110 ${y + 3}" ${traco}/>`;
+    switch (tipo) {
+      case "aberta":
+        return `<ellipse cx="100" cy="${y + 8}" rx="9.5" ry="9" fill="${C.escuro}"/>` +
+          `<ellipse cx="100" cy="${y + 12.5}" rx="6" ry="3.8" fill="${C.rosa}"/>`;
+      case "mastiga":
+        return `<path d="M91 ${y + 5} Q100 ${y + 10} 109 ${y + 5}" ${traco} stroke-width="3"/>`;
+      case "triste":
+        return `<path d="M90 ${y + 9} Q100 ${y + 1} 110 ${y + 9}" ${traco}/>`;
+      case "eca":
+        return `<path d="M87 ${y + 7} q3.25 -5 6.5 0 t6.5 0 t6.5 0 t6.5 0" ${traco}/>` +
+          `<path d="M104 ${y + 8} q4 9 9 4" stroke="#8bd17c" stroke-width="5" fill="none" stroke-linecap="round"/>`;
+      case "lingua":
+        return `<path d="M95 ${y + 3} Q100 ${y + 17} 105 ${y + 3} Z" fill="${C.rosa}"/>` + sorriso;
+      default:
+        return sorriso;
+    }
+  }
+
   /* ---------- Gatinha roxa (viewBox 0 0 200 200) ---------- */
   function gatinhaG({ dormindo = false, princesa = true } = {}) {
     const olhos = dormindo
@@ -154,6 +196,37 @@ window.Mascotes = (() => {
     </g>`;
   }
 
+  /* ---------- Cachorrinho preto e branco (viewBox 0 0 200 200) ---------- */
+  function cachorrinhoG({ olhos = "abertos", boca = "lingua" } = {}) {
+    const branco = "#fdf9ff", sombra = "#e7dcf0", preto = "#2b2433", mancha = "#3a3044";
+    return `
+    <g class="m-cachorrinho">
+      <path class="m-rabo" d="M140 162 Q170 152 166 120" stroke="${preto}" stroke-width="13" fill="none" stroke-linecap="round"/>
+      <ellipse cx="100" cy="152" rx="46" ry="42" fill="${branco}"/>
+      <path d="M57 146 Q58 120 82 116 Q90 134 76 152 Q64 162 57 146 Z" fill="${preto}"/>
+      <ellipse cx="100" cy="163" rx="26" ry="24" fill="${sombra}"/>
+      <ellipse cx="80" cy="189" rx="15" ry="9" fill="${preto}"/>
+      <ellipse cx="120" cy="189" rx="15" ry="9" fill="${branco}" stroke="${sombra}" stroke-width="2.5"/>
+      <ellipse cx="100" cy="88" rx="55" ry="47" fill="${branco}"/>
+      <ellipse cx="100" cy="52" rx="14" ry="8.5" fill="${preto}"/>
+      <ellipse cx="124" cy="82" rx="21" ry="23" fill="${mancha}" transform="rotate(14 124 82)"/>
+      <ellipse cx="122" cy="84" rx="12.5" ry="14.5" fill="${branco}"/>
+      <path d="M57 50 Q30 48 26 80 Q23 108 39 117 Q54 122 58 99 Q63 74 57 50 Z" fill="${preto}"/>
+      <path d="M143 50 Q170 48 174 80 Q177 108 161 117 Q146 122 142 99 Q137 74 143 50 Z" fill="${preto}"/>
+      <path d="M50 62 Q38 72 36 92" stroke="${mancha}" stroke-width="3" fill="none" stroke-linecap="round" opacity=".8"/>
+      <ellipse cx="100" cy="109" rx="27" ry="19" fill="#ffffff"/>
+      ${olhosPet(olhos, 9, 11)}
+      <ellipse cx="64" cy="104" rx="8" ry="5" fill="${C.bochecha}" opacity=".6"/>
+      <ellipse cx="138" cy="106" rx="8" ry="5" fill="${C.bochecha}" opacity=".6"/>
+      <ellipse cx="100" cy="100" rx="10" ry="7" fill="${preto}"/>
+      <ellipse cx="96.5" cy="97.5" rx="3.2" ry="1.9" fill="#fff" opacity=".75"/>
+      ${bocaPet(boca, 107)}
+      <path d="M62 128 Q100 145 138 128" stroke="${C.roxo}" stroke-width="7" fill="none" stroke-linecap="round"/>
+      <circle cx="100" cy="141" r="7.5" fill="${C.ouro}" stroke="${C.ouroEsc}" stroke-width="2"/>
+      ${coracao(100, 141, 0.32, C.ouroEsc)}
+    </g>`;
+  }
+
   /* ================== Coisas que são a cara dela ================== */
   const T = {
     kitsune: "#a259e6",
@@ -189,7 +262,7 @@ window.Mascotes = (() => {
     <path transform="translate(${x} ${y}) scale(${s})" d="M0 -10 Q1.5 -1.5 10 0 Q1.5 1.5 0 10 Q-1.5 1.5 -10 0 Q-1.5 -1.5 0 -10 Z" fill="${cor}"/>`;
 
   /* ---------- Kitsune roxa de nove caudas (viewBox 0 0 200 200) ---------- */
-  function kitsuneG({ fogos = true } = {}) {
+  function kitsuneG({ fogos = true, olhos = "abertos", boca = "sorriso" } = {}) {
     const id = `kt${++uid}`;
     // cauda fofinha em pluma, com a pontinha clara virando pra fora
     const forma = "M0 0 C-20 -24 -30 -66 -14 -100 C-6 -116 10 -124 22 -118 C14 -108 18 -96 22 -80 C28 -50 18 -18 0 0 Z";
@@ -227,12 +300,12 @@ window.Mascotes = (() => {
       <path d="M30 104 L48 98 L50 109 Z M170 104 L152 98 L150 109 Z" fill="${T.ponta}"/>
       <path d="M56 100 Q70 93 86 100 Q100 92 114 100 Q130 93 144 100 Q138 130 100 133 Q62 130 56 100 Z" fill="${T.ponta}"/>
       <path d="M100 54 L105 62 L100 70 L95 62 Z" fill="${C.rosa}"/>
-      <g class="m-piscar">${olhoAberto(78, 84, 10, 12)}${olhoAberto(122, 84, 10, 12)}</g>
-      <path d="M67 77 Q60 72 54 74 M133 77 Q140 72 146 74" stroke="${C.escuro}" stroke-width="3" fill="none" stroke-linecap="round"/>
+      ${olhosPet(olhos, 10, 12)}
+      ${olhos === "abertos" ? `<path d="M67 77 Q60 72 54 74 M133 77 Q140 72 146 74" stroke="${C.escuro}" stroke-width="3" fill="none" stroke-linecap="round"/>` : ""}
       <ellipse cx="64" cy="106" rx="8" ry="5" fill="${C.bochecha}" opacity=".7"/>
       <ellipse cx="136" cy="106" rx="8" ry="5" fill="${C.bochecha}" opacity=".7"/>
       <ellipse cx="100" cy="104" rx="6.5" ry="4.5" fill="${C.escuro}"/>
-      <path d="M100 109 Q96 115 90 112 M100 109 Q104 115 110 112" stroke="${C.escuro}" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+      ${bocaPet(boca, 109)}
       <path d="M66 131 Q100 146 134 131" stroke="${T.corda}" stroke-width="6" fill="none" stroke-linecap="round"/>
       <circle cx="100" cy="143" r="7.5" fill="${C.ouro}" stroke="${C.ouroEsc}" stroke-width="2"/>
       <path d="M95 145 L105 145 M100 145 L100 150" stroke="${C.ouroEsc}" stroke-width="1.8" stroke-linecap="round"/>
@@ -382,12 +455,16 @@ window.Mascotes = (() => {
   return {
     gatinha: (op) => svg(gatinhaG(op), "0 0 200 200", "gatinha"),
     lontrinha: (op) => svg(lontrinhaG(op), "0 0 200 200", "lontrinha"),
+    cachorrinho: (op) => svg(cachorrinhoG(op), "0 0 200 200", "cachorrinho"),
     casal: (op) => svg(casalG(op), "0 0 400 240", "casal"),
     kitsune: (op) => svg(kitsuneG(op), "-50 0 300 230", "kitsune"),
     fogo: () => svg(fogoRaposa(0, 0, 1), "-14 -22 28 38", "fogo"),
     gatinhaCroft: () => svg(gatinhaCroftG(), "0 0 200 200", "gatinha croft"),
     gatinhaEscarlate: () => svg(gatinhaEscarlateG(), "0 0 200 200", "gatinha escarlate"),
     adesivo: (nome) => (adesivos[nome] ? svg(adesivos[nome], "0 0 120 120", `adesivo-${nome}`) : ""),
+    // Peças soltas pra casinha montar os bichinhos com roupinha e sujeira por cima
+    g: { kitsune: kitsuneG, cachorrinho: cachorrinhoG, gatinha: gatinhaG, lontrinha: lontrinhaG, casal: casalG, gatinhaCroft: gatinhaCroftG },
+    svg,
     pata: (cor = "currentColor") => `
       <svg class="pata" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <ellipse cx="20" cy="27" rx="10" ry="8.5" fill="${cor}"/>

@@ -64,8 +64,23 @@ Em 1 ou 2 minutos o link já mostra a versão nova. O `.gitignore` continua deix
 
 Depois, gere um QR code do link e coloque num cartãozinho pra entregar pra ela. 💌
 
-## Fliperama 🕹️
-A seção "Fliperama da Gatinha" tem 4 joguinhos estilo Pou: Chuva de Comida, Kitsune nas Nuvens, Lontrinha Nadadora e Jogo da Memória. Os nomes, descrições, comidas e frases de fim de jogo ficam no bloco `jogos` do `js/config.js`; a lógica fica em `js/jogos.js`. Os recordes ficam salvos no navegador dela.
+## Nossa Casinha 🏡🦊🐶
+A seção "Nossa Casinha" é estilo Pou: a Kitsune e o Cachorrinho preto e branco moram lá. Tem barrinhas de fome, banho, diversão e energia, moedinhas e nível, e as setinhas (ou o mapa 🏠) passam pelos cômodos:
+
+- **Cozinha:** geladeira com as comidas favoritas dela. Arrasta a comida até a boquinha de um dos dois (ou só toca). Banana, tomate e pepino dão "ECA!" 🤢
+- **Banheiro:** esfrega o sabonete até fazer espuma e liga o chuveiro.
+- **Quarto:** guarda-roupa com as roupinhas e o abajur pra apagar a luz e eles dormirem.
+- **Sala de Jogos:** os 4 joguinhos (Chuva de Comida, Kitsune nas Nuvens, Lontrinha Nadadora e Jogo da Memória) e a bola. Cada partida dá moedinhas.
+- **Cineminha:** a lista "Pra assistir", que ela vai marcando, e o botão Sessão, que sorteia o que ver hoje.
+- **Cantinho da Manu:** a Lista da Manu (comidas, coisas que ela curte e o que não gosta) e um recadinho com os motivos.
+- **Loja** (em todo cômodo): comidas, roupinhas, papel de parede, piso e enfeites. Cada cômodo guarda a decoração dele. Todo dia tem um presente 🎁 com moedinhas.
+
+O que dá pra mudar no `js/config.js`:
+- bloco `casinha`: nomes dos bichinhos, moedas iniciais, presente do dia, comidas (quanto enche e o preço), a geladeira do começo e as falas;
+- bloco `listasManu`: a Lista da Manu e o `praAssistir` (cada filme pode ter `link`);
+- bloco `jogos`: nomes, descrições e frases dos joguinhos.
+
+A lógica fica em `js/casa.js` (casinha) e `js/jogos.js` (joguinhos). Tudo que ela faz na casinha fica salvo só no navegador dela.
 
 ## Easter egg e segredos
 Tem uma patinha roxa quase invisível no rodapé. 🐾

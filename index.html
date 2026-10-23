@@ -9,8 +9,9 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💜</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/casa.css">
 </head>
 <body class="travado">
   <canvas id="fundo" aria-hidden="true"></canvas>
@@ -194,12 +195,12 @@
       <div class="cartas" id="gradeCartas"></div>
     </section>
 
-    <!-- Fliperama: mini games estilo Pou -->
-    <section id="jogos" class="secao">
-      <p class="sobretitulo reveal">pra quando bater o tédio</p>
-      <h2 class="titulo reveal">Fliperama da Gatinha</h2>
-      <p class="secao-intro reveal">Uns joguinhos estilo Pou, feitos só pra você. Bate o recorde e me manda print 😤</p>
-      <div class="jogos-grade reveal" id="gradeJogos"></div>
+    <!-- Nossa Casinha: estilo Pou, com a Kitsune e o Cachorrinho (js/casa.js) -->
+    <section id="casinha" class="secao">
+      <p class="sobretitulo reveal">um cantinho só nosso</p>
+      <h2 class="titulo reveal">Nossa Casinha</h2>
+      <p class="secao-intro reveal">A Kitsune e o Cachorrinho moram aqui. Dá comidinha, banho, carinho e roupinha, decora a casa e joga na Sala de Jogos pra ganhar moedinhas 🪙</p>
+      <div class="casinha reveal" id="casinhaApp"></div>
     </section>
 
     <!-- 13. Playlist -->
@@ -264,7 +265,7 @@
       <li><a href="#numeros">Em números</a></li>
       <li><a href="#motivos">Motivos</a></li>
       <li><a href="#cartas">Abra quando…</a></li>
-      <li><a href="#jogos">Fliperama</a></li>
+      <li><a href="#casinha">Nossa Casinha</a></li>
       <li data-se="playlist"><a href="#playlist">Playlist</a></li>
       <li><a href="#prasempre">Pra sempre</a></li>
       <li><a href="#carta">Uma carta pra você</a></li>
@@ -283,7 +284,7 @@
     </div>
   </div>
 
-  <!-- Tela do mini game (Fliperama) -->
+  <!-- Tela dos mini games (abrem pela Sala de Jogos da casinha) -->
   <div class="jogo" id="jogo" hidden>
     <div class="jogo-caixa" role="dialog" aria-modal="true" aria-labelledby="jogoNome">
       <div class="jogo-topo">
@@ -304,5 +305,6 @@
   <script src="js/mascotes.js"></script>
   <script src="js/main.js"></script>
   <script src="js/jogos.js"></script>
+  <script src="js/casa.js"></script>
 </body>
 </html>

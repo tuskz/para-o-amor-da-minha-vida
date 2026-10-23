@@ -1387,40 +1387,7 @@ body.travado .menu { display: none; }
   .fome-comida { width: 74px; }
 }
 
-/* ================== Fliperama ================== */
-.jogos-grade { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; max-width: 1060px; margin: 0 auto; }
-.jogo-cartao {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  padding: 20px 14px 18px;
-  color: inherit;
-  font: inherit;
-  text-align: center;
-  cursor: pointer;
-  transition: transform .25s cubic-bezier(.2, .7, .2, 1), border-color .25s;
-}
-.jogo-cartao:hover, .jogo-cartao:focus-visible { transform: translateY(-6px); border-color: var(--lilas); outline: none; }
-.jogo-cartao-arte { position: relative; width: 112px; height: 96px; margin-bottom: 4px; }
-.jogo-cartao-arte .mascote { width: 100%; height: 100%; }
-.jogo-cartao-selo { position: absolute; right: -8px; bottom: -4px; font-size: 1.7rem; line-height: 1; filter: drop-shadow(0 3px 6px rgba(26, 6, 38, .6)); }
-.jogo-cartao-nome { font-family: var(--f-script); font-size: 1.8rem; line-height: 1.1; color: var(--lavanda); }
-.jogo-cartao-desc { flex: 1; font-size: .84rem; line-height: 1.5; color: var(--texto-suave); text-wrap: balance; }
-.jogo-cartao-recorde { font-size: .75rem; color: var(--lilas); }
-.jogo-cartao-jogar { margin-top: 6px; padding: .5em 1.4em; border-radius: 99px; background: linear-gradient(135deg, var(--violeta), var(--roxo)); color: #fff; font-size: .85rem; font-weight: 600; box-shadow: 0 6px 18px rgba(123, 44, 191, .45); }
-@media (max-width: 960px) { .jogos-grade { grid-template-columns: repeat(2, 1fr); max-width: 560px; } }
-@media (max-width: 520px) {
-  .jogos-grade { gap: 12px; }
-  .jogo-cartao { padding: 14px 8px 14px; }
-  .jogo-cartao-arte { width: 86px; height: 74px; }
-  .jogo-cartao-nome { font-size: 1.4rem; }
-  .jogo-cartao-desc { font-size: .76rem; }
-  .jogo-cartao-jogar { padding: .45em 1.1em; font-size: .8rem; }
-}
-
+/* ================== Mini games (abrem pela Sala de Jogos da casinha) ================== */
 /* Tela do mini game */
 .jogo {
   position: fixed;
